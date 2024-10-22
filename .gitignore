@@ -22,3 +22,7 @@ themes.json
 .DS_Store
 /.idea
 /.vscode
+/.buildpath
+/.project
+/.settings/
+/fonts/
