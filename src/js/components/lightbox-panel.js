@@ -234,6 +234,16 @@ export default {
             name: 'beforeitemshow',
 
             handler(e) {
+                html($(this.selCaption, this.$el), this.getItem().caption || '');
+                html(
+                    $(this.selCounter, this.$el),
+                    this.t('counter', this.index + 1, this.slides.length),
+                );
+
+                for (let j = -this.preload; j <= this.preload; j++) {
+                    this.loadItem(this.index + j);
+                }
+
                 if (this.isToggled()) {
                     return;
                 }
@@ -251,22 +261,6 @@ export default {
         },
 
         {
-            name: 'itemshow',
-
-            handler() {
-                html($(this.selCaption, this.$el), this.getItem().caption || '');
-                html(
-                    $(this.selCounter, this.$el),
-                    this.t('counter', this.index + 1, this.slides.length),
-                );
-
-                for (let j = -this.preload; j <= this.preload; j++) {
-                    this.loadItem(this.index + j);
-                }
-            },
-        },
-
-        {
             name: 'itemshown',
 
             handler() {
@@ -280,7 +274,7 @@ export default {
             async handler(_, item) {
                 const { source: src, type, attrs = {} } = item;
 
-                this.setItem(item, '<span uk-spinner></span>');
+                this.setItem(item, '<span uk-spinner uk-inverse></span>');
 
                 if (!src) {
                     return;
@@ -315,6 +309,7 @@ export default {
                         src,
                         playsinline: '',
                         controls: inline ? null : '',
+                        loop: inline ? '' : null,
                         poster: this.videoAutoplay ? null : item.poster,
                         'uk-video': inline ? 'automute: true' : Boolean(this.videoAutoplay),
                         ...attrs,
@@ -433,7 +428,7 @@ export default {
         },
 
         setError(item) {
-            this.setItem(item, '<span uk-icon="icon: bolt; ratio: 2"></span>');
+            this.setItem(item, '<span uk-icon="icon: bolt; ratio: 2" uk-inverse></span>');
         },
 
         showControls() {

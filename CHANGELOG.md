@@ -12,6 +12,8 @@
 - Allow `template` option to reference a `template` element in the DOM for the lightbox layout in Lightbox component
 - Add hidden class to hide empty elements to Visibility component
 - Add inverse style for form rang to Form component
+- Add margin xsmall classes
+- Add horizontal margin variable to subnav pill in Subnav component
 - Add close-circle and arrow-down-arrow-up icons
 
 ### Changed
@@ -26,10 +28,30 @@
 
 ### Fixed
 
-- Fix hidden class keep showing elements on hover if a link is clicked in Visibility component
 - Fix spaces in the markup affecting the horizontal divider margin in Breadcrumb component
-- Fix showing elements if an element has focus within in Transition component
+
+## 3.21.16 (November 22, 2024)
+
+### Fixed
+
+- Fix regression in Scroll component
+
+## 3.21.15 (November 22, 2024)
+
+### Fixed
+
+- Fix regression in SVG parsing
+
+## 3.21.14 (November 21, 2024)
+
+### Fixed
+
+- Fix child components in Dropdown components toggling transparency in Navbar component
+- Fix Navbar toggles Dropdown component when hovering with mouse on initial page load
+- Fix Scrollspy Nav component checks if targets exists before activating state
 - Fix Slideshow component list does not fill available space in Safari
+- Fix hidden class keep showing elements on hover if a link is clicked in Visibility component
+- Fix showing elements if an element has focus within in Transition component
 
 ## 3.21.13 (September 26, 2024)
 
