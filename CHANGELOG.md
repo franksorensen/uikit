@@ -1,6 +1,66 @@
 # Changelog
 
-## WIP Lightbox
+## 3.23.3 (March 17, 2025)
+
+### Fixed
+
+- Fix Grid component performance regression
+
+## 3.23.2 (March 4, 2025)
+
+### Fixed
+
+- Fix min option in Height Viewport component
+
+## 3.23.1 (February 19, 2025)
+
+### Fixed
+
+- Fix Safari 18.3 `:not(:has(...)) invalidation` issue causing hidden class not showing in Visibility component
+
+## 3.23.0 (February 4, 2025)
+
+### Added
+
+- Add `property` option to Height Viewport component
+
+### Changed
+
+- IMPORTANT: Rename `minHeight` option to `min` in Height Viewport component
+
+### Fixed
+
+- Fix Toggle component does not toggle if element is a link without `href` attribute
+
+## 3.22.4 (January 30, 2025)
+
+### Added
+
+- Add dropbar margin variable to Dropdown component
+
+### Fixed
+
+- Fix pressing arrow down key on nav item in Dropbar component opens Dropdown component 
+
+## 3.22.3 (January 24, 2025)
+
+### Fixed
+
+- Fix vertical alignment for input of type date, time and datetime-local in Safari
+
+## 3.22.2 (January 16, 2025)
+
+### Fixed
+
+- Fix missing list markers in Chrome in List component
+
+## 3.22.1 (January 16, 2025)
+
+### Changed
+
+- Apply accordion item hook also to the first item
+
+## 3.22.0 (January 9, 2025)
 
 ### Added
 
@@ -12,9 +72,12 @@
 - Allow `template` option to reference a `template` element in the DOM for the lightbox layout in Lightbox component
 - Add hidden class to hide empty elements to Visibility component
 - Add inverse style for form rang to Form component
-- Add margin xsmall classes
+- Add margin xsmall classes to Margin component
 - Add horizontal margin variable to subnav pill in Subnav component
+- Add text stroke class to Text component
 - Add close-circle and arrow-down-arrow-up icons
+- Add `reload` option to Countdown component
+- Add `offset-end` option to Sticky component
 
 ### Changed
 
@@ -29,6 +92,12 @@
 ### Fixed
 
 - Fix spaces in the markup affecting the horizontal divider margin in Breadcrumb component
+
+## 3.21.17 (January 7, 2025)
+
+### Fixed
+
+- Fix Navbar component not re-applying transparency after closing Drop component
 
 ## 3.21.16 (November 22, 2024)
 
@@ -410,7 +479,7 @@
 
 - Fix build
 
-## 3.17.7
+## 3.17.7 (November 2, 2023)
 
 ### Added
 
