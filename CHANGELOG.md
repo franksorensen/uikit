@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.23.7 (May 9, 2025)
+
+### Fixed
+
+- Fix Inverse component not being responsive for multiple target elements
+- Fix tabindex not being set for Video component in `autoplay: hover` mode
+
+## 3.23.6 (April 10, 2025)
+
+### Fixed
+
+- Revert: Fix performance when transitioning element properties in Chrome (causes regression in Safari and Firefox)
+
+## 3.23.5 (April 7, 2025)
+
+### Fixed
+
+- Fix regression with transitioning element properties not being applied
+
+## 3.23.4 (March 26, 2025)
+
+### Fixed
+
+- Fix performance when transitioning element properties in Chrome
+
 ## 3.23.3 (March 17, 2025)
 
 ### Fixed
