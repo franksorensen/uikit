@@ -75,6 +75,13 @@ const Icon = {
         addClass(this.$el, 'uk-icon');
     },
 
+    async connected() {
+        const svg = await this.svg;
+        if (svg) {
+            svg.ariaHidden = true;
+        }
+    },
+
     methods: {
         async getSvg() {
             const icon = getIcon(this.icon);
@@ -195,7 +202,15 @@ export const Slidenav = {
 
 export const NavbarToggleIcon = {
     extends: ButtonComponent,
+
     i18n: { label: 'Open menu' },
+
+    beforeConnect() {
+        const button = this.$el.closest('a,button');
+        if (button) {
+            button.ariaExpanded = false;
+        }
+    },
 };
 
 export const Close = {

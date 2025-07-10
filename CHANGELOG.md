@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.23.11 (June 25, 2025)
+
+### Fixed
+
+- Fix setting `aria-expanded` on the closest button of the Navbar Toggle Icon
+- Fix SVG component handles base64 encoded data URIs correctly
+
+## 3.23.10 (June 12, 2025)
+
+### Fixed
+
+- Fix Toggle component does not toggle if element is a link without `href` attribute
+- Fix closing modal prevents page from being scrollable in Firefox
+
+## 3.23.9 (June 3, 2025)
+
+### Changed
+
+- Add missing `aria-hidden` attribute in Icon component
+
+## 3.23.8 (June 2, 2025)
+
+### Changed
+
+- Delay showing dropdowns in Dropnav and Navbar components to allow passing with the pointer over the element
+
+### Fixed
+
+- Fix setting focus to Modal/Offcanvas Toggle component after close
+- Fix Dropnav component no longer opens its Drop components upon initial hover during page load (in Safari and Firefox)
+- Fix Scrollspy Nav component no longer highlights items whose targets do not exist
+
 ## 3.23.7 (May 9, 2025)
 
 ### Fixed
@@ -601,7 +633,7 @@
 
 ### Fixed
 
-- Fix Toggle in hover mode does not trigger when scrolling in FireFox
+- Fix Toggle in hover mode does not trigger when scrolling in Firefox
 - Fix Parallax component stop parsing
 
 ## 3.16.24 (August 1, 2023)
