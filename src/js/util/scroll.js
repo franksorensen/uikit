@@ -53,7 +53,7 @@ export function preventBackgroundScroll(el) {
     const props = {
         overflowY: CSS.supports('overflow', 'clip') ? 'clip' : 'hidden',
         touchAction: 'none',
-        paddingRight: width(window) - scrollingElement.clientWidth || '',
+        scrollbarGutter: width(window) - scrollingElement.clientWidth ? 'stable' : '',
     };
     css(scrollingElement, props);
     return () => {
