@@ -1,4 +1,4 @@
-/*! UIkit 3.24.2 | https://www.getuikit.com | (c) 2014 - 2025 YOOtheme | MIT License */
+/*! UIkit 3.25.1 | https://www.getuikit.com | (c) 2014 - 2025 YOOtheme | MIT License */
 
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -3786,7 +3786,7 @@
     };
     App.util = util;
     App.options = {};
-    App.version = "3.24.2";
+    App.version = "3.25.1";
 
     const PREFIX = "uk-";
     const DATA = "__uikit__";
@@ -3952,17 +3952,16 @@
         next: "Next slide",
         previous: "Previous slide",
         slideX: "Slide %s",
-        slideLabel: "%s of %s",
-        role: "String"
+        slideLabel: "%s of %s"
       },
       data: {
         selNav: false,
         role: "region"
       },
       computed: {
-        nav: ({ selNav }, $el) => $(selNav, $el),
+        nav: ({ selNav }, $el) => $$(selNav, $el),
         navChildren() {
-          return children(this.nav);
+          return this.nav.map((nav) => children(nav)).flat();
         },
         selNavItem: ({ attrItem }) => `[${attrItem}],[data-${attrItem}]`,
         navItems(_, $el) {
@@ -4020,9 +4019,9 @@
         slides(slides) {
           slides.forEach(
             (slide, i) => attr(slide, {
-              role: this.nav ? "tabpanel" : "group",
+              role: this.nav.length ? "tabpanel" : "group",
               "aria-label": this.t("slideLabel", i + 1, this.length),
-              "aria-roledescription": this.nav ? null : "slide"
+              "aria-roledescription": this.nav.length ? null : "slide"
             })
           );
           this.padNavitems();
@@ -4103,16 +4102,16 @@
           }
         },
         padNavitems() {
-          if (!this.nav) {
-            return;
-          }
-          const children2 = [];
-          for (let i = 0; i < this.length; i++) {
-            const attr2 = `${this.attrItem}="${i}"`;
-            children2[i] = this.navChildren.findLast((el) => el.matches(`[${attr2}]`)) || $(`<li ${attr2}><a href></a></li>`);
-          }
-          if (!isEqual(children2, this.navChildren)) {
-            html(this.nav, children2);
+          for (const nav of this.nav) {
+            const navChildren = children(nav);
+            const navItems = [];
+            for (let i = 0; i < this.length; i++) {
+              const attr2 = `${this.attrItem}="${i}"`;
+              navItems[i] = navChildren.findLast((el) => el.matches(`[${attr2}]`)) || $(`<li ${attr2}><a href></a></li>`);
+            }
+            if (!isEqual(navItems, navChildren)) {
+              html(this.nav, navItems);
+            }
           }
         }
       }
@@ -4462,7 +4461,7 @@
         pauseOnHover: false,
         velocity: 2,
         Animations,
-        template: `<div class="uk-lightbox uk-overflow-hidden"> <div class="uk-lightbox-items"></div> <div class="uk-position-top-right uk-position-small uk-transition-fade" uk-inverse> <button class="uk-lightbox-close uk-close-large" type="button" uk-close></button> </div> <div class="uk-lightbox-slidenav uk-position-center-left uk-position-medium uk-transition-fade" uk-inverse> <a href uk-slidenav-previous uk-lightbox-item="previous"></a> </div> <div class="uk-lightbox-slidenav uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse> <a href uk-slidenav-next uk-lightbox-item="next"></a> </div> <div class="uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse style="max-height: 90vh; overflow: auto;"> <ul class="uk-lightbox-thumbnav uk-lightbox-thumbnav-vertical uk-thumbnav uk-thumbnav-vertical"></ul> <ul class="uk-lightbox-dotnav uk-dotnav uk-dotnav-vertical"></ul> </div> <div class="uk-lightbox-counter uk-text-large uk-position-top-left uk-position-small uk-transition-fade" uk-inverse></div> <div class="uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque"></div> </div>`
+        template: `<div class="uk-lightbox uk-overflow-hidden">  <div class="uk-lightbox-items"></div>  <div class="uk-position-top-right uk-position-small uk-transition-fade" uk-inverse>  <button class="uk-lightbox-close uk-close-large" type="button" uk-close></button>  </div>  <div class="uk-lightbox-slidenav uk-position-center-left uk-position-medium uk-transition-fade" uk-inverse>  <a href uk-slidenav-previous uk-lightbox-item="previous"></a>  </div>  <div class="uk-lightbox-slidenav uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse>  <a href uk-slidenav-next uk-lightbox-item="next"></a>  </div>  <div class="uk-position-center-right uk-position-medium uk-transition-fade" uk-inverse style="max-height: 90vh; overflow: auto;">  <ul class="uk-lightbox-thumbnav uk-lightbox-thumbnav-vertical uk-thumbnav uk-thumbnav-vertical"></ul>  <ul class="uk-lightbox-dotnav uk-dotnav uk-dotnav-vertical"></ul>  </div>  <div class="uk-lightbox-counter uk-text-large uk-position-top-left uk-position-small uk-transition-fade" uk-inverse></div>  <div class="uk-lightbox-caption uk-position-bottom uk-text-center uk-transition-slide-bottom uk-transition-opaque"></div>  </div>`
       }),
       created() {
         let $el = $(this.template);
@@ -4878,7 +4877,7 @@
         this.$mount(
           append(
             container,
-            `<div class="${this.clsMsg}${this.status ? ` ${this.clsMsg}-${this.status}` : ""}" role="alert"> <a href class="${this.clsClose}" data-uk-close></a> <div>${this.message}</div> </div>`
+            `<div class="${this.clsMsg}${this.status ? ` ${this.clsMsg}-${this.status}` : ""}" role="alert">  <a href class="${this.clsClose}" data-uk-close></a>  <div>${this.message}</div>  </div>`
           )
         );
       },
@@ -5603,7 +5602,7 @@
       return sumBy(children(list).slice(0, index), (el) => dimensions$1(el).width);
     }
     function centerEl(el, list) {
-      return dimensions$1(list).width / 2 - dimensions$1(el).width / 2;
+      return (dimensions$1(list).width - dimensions$1(el).width) / 2;
     }
     function getElLeft(el, list) {
       return el && (position(el).left + (isRtl ? dimensions$1(el).width - dimensions$1(list).width : 0)) * (isRtl ? -1 : 1) || 0;
@@ -5672,7 +5671,7 @@
             if (this.center) {
               if (left < width / 2 && left + slideWidth + dimensions$1(this.slides[getIndex(i + 1, this.slides)]).width / 2 > width / 2) {
                 sets.push(i);
-                left = width / 2 - slideWidth / 2;
+                left = (width - slideWidth) / 2;
               }
             } else if (left === 0) {
               sets.push(Math.min(i, this.maxIndex));
@@ -5763,7 +5762,7 @@
             return;
           }
           const next = this.slides[index];
-          let width = dimensions$1(this.list).width / 2 - dimensions$1(next).width / 2;
+          let width = (dimensions$1(this.list).width - dimensions$1(next).width) / 2;
           let j = 0;
           while (width > 0) {
             const slideIndex = this.getIndex(--j + index, index);
@@ -5813,7 +5812,7 @@
           const left = -width;
           const right = width * 2;
           const slideWidth = dimensions$1(this.slides[this.index]).width;
-          const slideLeft = this.center ? width / 2 - slideWidth / 2 : 0;
+          const slideLeft = this.center ? (width - slideWidth) / 2 : 0;
           const slides = /* @__PURE__ */ new Set();
           for (const i of [-1, 1]) {
             let currentLeft = slideLeft + (i > 0 ? slideWidth : 0);
@@ -5828,12 +5827,12 @@
         },
         getIndexAt(percent) {
           let index = -1;
-          const scrollDist = this.center ? getWidth(this.list) - (dimensions$1(this.slides[0]).width / 2 + dimensions$1(last(this.slides)).width / 2) : getWidth(this.list, this.maxIndex);
+          const scrollDist = this.center ? getWidth(this.list) - (dimensions$1(this.slides[0]).width + dimensions$1(last(this.slides)).width) / 2 : getWidth(this.list, this.maxIndex);
           let dist = percent * scrollDist;
           let slidePercent = 0;
           do {
             const slideWidth = dimensions$1(this.slides[++index]).width;
-            const slideDist = this.center ? slideWidth / 2 + dimensions$1(this.slides[index + 1]).width / 2 : slideWidth;
+            const slideDist = this.center ? (slideWidth + dimensions$1(this.slides[index + 1]).width) / 2 : slideWidth;
             slidePercent = dist / slideDist % 1;
             dist -= slideDist;
           } while (dist >= 0 && index < this.maxIndex);
@@ -5869,7 +5868,7 @@
           }
           diff = Math.max(
             diff,
-            slideWidth / 2 + dimensions$1(slides[getIndex(+index + i, slides)]).width / 2 - (left - listHalf)
+            (slideWidth + dimensions$1(slides[getIndex(+index + i, slides)]).width) / 2 - (left - listHalf)
           );
         }
         if (Math.trunc(diff) > sumBy(
@@ -6339,7 +6338,7 @@
         async _show(title, id) {
           this.tooltip = append(
             this.container,
-            `<div id="${id}" class="uk-${this.$options.name}" role="tooltip"> <div class="uk-${this.$options.name}-inner">${title}</div> </div>`
+            `<div id="${id}" class="uk-${this.$options.name}" role="tooltip">  <div class="uk-${this.$options.name}-inner">${title}</div>  </div>`
           );
           on(this.tooltip, "toggled", (e, toggled) => {
             if (!toggled) {
@@ -6723,8 +6722,8 @@
         collapsible: true,
         multiple: false,
         clsOpen: "uk-open",
-        toggle: "> .uk-accordion-title",
-        content: "> .uk-accordion-content",
+        toggle: ".uk-accordion-title",
+        content: ".uk-accordion-content",
         offset: 0
       },
       computed: {
@@ -6768,20 +6767,17 @@
         {
           name: "click keydown",
           delegate: ({ targets, $props }) => `${targets} ${$props.toggle}`,
-          async handler(e) {
-            var _a;
+          handler(e) {
             if (e.type === "keydown" && e.keyCode !== keyMap.SPACE) {
               return;
             }
             maybeDefaultPreventClick(e);
-            (_a = this._off) == null ? void 0 : _a.call(this);
-            this._off = keepScrollPosition(e.target);
-            await this.toggle(index(this.toggles, e.current));
-            this._off();
+            const off = keepScrollPosition(e.target);
+            this.toggle(index(this.toggles, e.current)).finally(off);
           }
         },
         {
-          name: "shown hidden",
+          name: "show hide shown hidden",
           self: true,
           delegate: ({ targets }) => targets,
           handler() {
@@ -6821,7 +6817,7 @@
             items = items.concat(activeItems);
           }
           if (!this.collapsible && activeItems.length < 2 && includes(activeItems, item)) {
-            return;
+            items = [];
           }
           return Promise.all(
             items.map(
@@ -6854,7 +6850,7 @@
       hide(content, false);
       const endHeight = sumBy(["marginTop", "marginBottom"], (prop) => css(content, prop)) + dimensions$1(content).height;
       const percent = currentHeight / endHeight;
-      duration = (velocity * endHeight + duration) * (show ? 1 - percent : percent);
+      duration = endHeight ? (velocity * endHeight + duration) * (show ? 1 - percent : percent) : 0;
       css(wrapper, "height", currentHeight);
       await Transition.start(wrapper, { height: show ? endHeight : 0 }, duration, transition2);
       unwrap(content);
@@ -8048,6 +8044,7 @@
     };
 
     var heightViewport = {
+      mixins: [Media],
       props: {
         expand: Boolean,
         offsetTop: Boolean,
@@ -8071,6 +8068,9 @@
         read() {
           if (!isVisible(this.$el)) {
             return false;
+          }
+          if (!this.matchMedia) {
+            return { minHeight: false };
           }
           let minHeight = "";
           const box = boxModelAdjust(this.$el, "height", "content-box");
@@ -8108,11 +8108,17 @@
           return { minHeight };
         },
         write({ minHeight }) {
-          css(this.$el, this.property, `max(${this.min || 0}px, ${minHeight})`);
+          css(
+            this.$el,
+            this.property,
+            minHeight === false ? "" : `max(${this.min || 0}px, ${minHeight})`
+          );
         },
         events: ["resize"]
       }
     };
+
+    var accordionIcon = "<svg width=\"13\" height=\"13\" viewBox=\"0 0 13 13\"><style>.uk-accordion-icon svg&gt;[class*=&quot;line-&quot;]{transition:0.2s ease-out;transition-property:transform, opacity;transform-origin:center}[aria-expanded=&quot;true&quot;] .uk-accordion-icon svg&gt;.line-1{transform:rotate(-45deg);opacity:0}[aria-expanded=&quot;true&quot;] .uk-accordion-icon svg&gt;.line-2{transform:rotate(90deg)}</style><rect width=\"13\" height=\"1\" fill=\"#000\" x=\"0\" y=\"6\" class=\"line-1\"/><rect width=\"1\" height=\"13\" fill=\"#000\" x=\"6\" y=\"0\" class=\"line-2\"/></svg>";
 
     var closeIcon = "<svg width=\"14\" height=\"14\" viewBox=\"0 0 14 14\"><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" x1=\"1\" y1=\"1\" x2=\"13\" y2=\"13\"/><line fill=\"none\" stroke=\"#000\" stroke-width=\"1.1\" x1=\"13\" y1=\"1\" x2=\"1\" y2=\"13\"/></svg>";
 
@@ -8239,6 +8245,7 @@
       spinner,
       totop,
       marker,
+      "accordion-icon": accordionIcon,
       "close-icon": closeIcon,
       "close-large": closeLarge,
       "drop-parent-icon": dropParentIcon,
@@ -8652,20 +8659,20 @@
       };
       modal.alert = function(message, options) {
         return openDialog(
-          ({ i18n }) => `<div class="uk-modal-body">${isString(message) ? message : html(message)}</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-primary uk-modal-close" type="button" autofocus>${i18n.ok}</button> </div>`,
+          ({ i18n }) => `<div class="uk-modal-body">${isString(message) ? message : html(message)}</div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-primary uk-modal-close" type="button" autofocus>${i18n.ok}</button>  </div>`,
           options
         );
       };
       modal.confirm = function(message, options) {
         return openDialog(
-          ({ i18n }) => `<form> <div class="uk-modal-body">${isString(message) ? message : html(message)}</div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">${i18n.cancel}</button> <button class="uk-button uk-button-primary" autofocus>${i18n.ok}</button> </div> </form>`,
+          ({ i18n }) => `<form>  <div class="uk-modal-body">${isString(message) ? message : html(message)}</div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-default uk-modal-close" type="button">${i18n.cancel}</button>  <button class="uk-button uk-button-primary" autofocus>${i18n.ok}</button>  </div>  </form>`,
           options,
           () => Promise.reject()
         );
       };
       modal.prompt = function(message, value, options) {
         const promise = openDialog(
-          ({ i18n }) => `<form class="uk-form-stacked"> <div class="uk-modal-body"> <label>${isString(message) ? message : html(message)}</label> <input class="uk-input" autofocus> </div> <div class="uk-modal-footer uk-text-right"> <button class="uk-button uk-button-default uk-modal-close" type="button">${i18n.cancel}</button> <button class="uk-button uk-button-primary">${i18n.ok}</button> </div> </form>`,
+          ({ i18n }) => `<form class="uk-form-stacked">  <div class="uk-modal-body">  <label>${isString(message) ? message : html(message)}</label>  <input class="uk-input" autofocus>  </div>  <div class="uk-modal-footer uk-text-right">  <button class="uk-button uk-button-default uk-modal-close" type="button">${i18n.cancel}</button>  <button class="uk-button uk-button-primary">${i18n.ok}</button>  </div>  </form>`,
           options,
           () => null,
           () => input.value
@@ -10020,6 +10027,7 @@
     var components = /*#__PURE__*/Object.freeze({
         __proto__: null,
         Accordion: Accordion,
+        AccordionIcon: IconComponent,
         Alert: alert,
         Close: Close,
         Cover: cover,

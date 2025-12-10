@@ -1,5 +1,42 @@
 # Changelog
 
+## 3.25.1 (December 5, 2025)
+
+### Added
+
+- Add accordion title gap variable to Accordion component
+
+### Fixed
+
+- Fix to allow for multiple navigations in Slider/Slideshow component
+- Fix multi-line horizontal padding for size modifiers in Form component
+
+### Changed
+
+- IMPORTANT: Rename `@form-padding-vertical` to `@form-multi-line-padding-vertical` in Form component
+
+## 3.25.0 (December 2, 2025)
+
+### Added
+
+- Add support for using the Accordion component without any default style
+- Add accordion icon to Accordion component
+- Add `media` option to Height Viewport component
+
+### Changed
+
+- IMPORTANT: Add `uk-accordion-defaut` class to apply style
+- IMPORTANT: Remove accordion icon from CSS. Use `uk-accordion-icon` attribute on HTML elements instead
+- IMPORTANT: Rename `@accordion-*` to `@accordion-default-*` in Accordion component
+- IMPORTANT: Rename `@inverse-accordion-*` to `@inverse-accordion-default-*` in Accordion component
+- IMPORTANT: Rename `.hook-accordion-*` to `.hook-accordion-default-*` in Accordion component
+- IMPORTANT: Rename `.hook-inverse-accordion-*` to `.hook-inverse-accordion-default-*` in Accordion component
+- Refactor Accordion component
+
+### Fixed
+
+- Fix nav parent icon shrinking if text is too long in Nav component
+
 ## 3.24.2 (October 13, 2025)
 
 ### Added
