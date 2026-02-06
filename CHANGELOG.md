@@ -1,5 +1,53 @@
 # Changelog
 
+## WIP
+
+### Fixed
+
+- Fix portrait images larger than viewport height in Lightbox component
+
+## 3.25.8 (February 2, 2026)
+
+### Fixed
+
+- Fix missing ukit-core CSS files in the npm package
+
+## 3.25.7 (January 27, 2026)
+
+### Fixed
+
+- Fix only the first nav is padded in Slider/Slideshow component
+
+## 3.25.6 (January 21, 2026)
+
+### Changed
+
+- Update link external icon in Icon component
+
+## 3.25.5 (January 13, 2026)
+
+### Added
+
+- Add scrolling by dragging with mouse to Overflow Fade component
+
+### Fixed
+
+- Fix visible scrollbar in Firefox in Overflow Fade component
+- Fix ignored click while opening is delayed in Drop component
+- Fix vertical pointer movement causes dragging in Slider/Slideshow component
+
+## 3.25.4 (December 19, 2025)
+
+### Fixed
+
+- Fix regression in Accordion component that prevents having Accordions within Accordions
+
+## 3.25.3 (December 18, 2025)
+
+### Fixed
+
+- Fix width and height for retina images in Lightbox component
+
 ## 3.25.1 (December 5, 2025)
 
 ### Added
@@ -8,6 +56,7 @@
 
 ### Fixed
 
+- Fix object fit for preserve width class in Utility component
 - Fix to allow for multiple navigations in Slider/Slideshow component
 - Fix multi-line horizontal padding for size modifiers in Form component
 
