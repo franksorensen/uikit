@@ -1,6 +1,37 @@
 # Changelog
 
-## WIP
+## 3.25.13 (February 23, 2026)
+
+### Fixed
+
+- Fix regression in Accordion component
+
+## 3.25.12 (February 19, 2026)
+
+### Fixed
+
+- Fix accordion causes page to scroll to the top initially in Firefox
+- Fix visible slides set to inert when `active: first` in Slider component
+
+## 3.25.11 (February 12, 2026)
+
+### Changed
+
+- Clip only left and right box shadows instead of all in Slider component
+- Make url changeable in `beforeSend` in Upload component
+
+### Fixed
+
+- Fix slides no longer retain focus when hidden in Slider component
+
+## 3.25.10 (February 10, 2026)
+
+### Fixed
+
+- Fix responsiveness of Margin and Grid component
+- Fix the initial active toggle when used with disabled toggles in Switcher and Tab component
+
+## 3.25.9 (February 6, 2026)
 
 ### Fixed
 
