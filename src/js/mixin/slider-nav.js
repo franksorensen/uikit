@@ -15,7 +15,7 @@ import {
     toggleClass,
 } from 'uikit-util';
 import { generateId } from '../api/instance';
-import { keyMap } from '../util/keys';
+import { getNavigationIndex, keyMap } from '../util/keys';
 import { maybeDefaultPreventClick } from './event';
 
 export default {
@@ -35,7 +35,7 @@ export default {
         nav: ({ selNav }, $el) => $$(selNav, $el),
 
         navChildren() {
-            return this.nav.map((nav) => children(nav)).flat();
+            return this.nav.flatMap((nav) => children(nav));
         },
 
         selNavItem: ({ attrItem }) => `[${attrItem}],[data-${attrItem}]`,
@@ -100,7 +100,7 @@ export default {
                     ariaLabel = this.t(cmd);
                 }
 
-                button.ariaControls = ariaControls;
+                attr(button, 'aria-controls', ariaControls);
                 button.ariaLabel = button.ariaLabel || ariaLabel;
             }
         },
@@ -126,7 +126,7 @@ export default {
     update: [
         {
             write() {
-                this.navItems.concat(this.nav).forEach((el) => el && (el.hidden = !this.maxIndex));
+                this.navItems.concat(this.nav).forEach((el) => el && (el.hidden = this.maxIndex < 1));
                 this.updateNav();
             },
 
@@ -175,17 +175,7 @@ export default {
                     return;
                 }
 
-                let i =
-                    keyCode === keyMap.HOME
-                        ? 0
-                        : keyCode === keyMap.END
-                          ? 'last'
-                          : keyCode === keyMap.LEFT
-                            ? 'previous'
-                            : keyCode === keyMap.RIGHT
-                              ? 'next'
-                              : -1;
-
+                const i = getNavigationIndex(keyCode);
                 if (~i) {
                     e.preventDefault();
                     this.show(i);

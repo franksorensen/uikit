@@ -127,7 +127,7 @@ export default {
 
     observe: [
         resize({
-            target: ({ slides, $el }) => [$el, ...slides],
+            target: ({ list, $el }) => [$el, ...children(list)],
         }),
         intersection({
             handler(entries) {
@@ -135,7 +135,7 @@ export default {
                     target.ariaHidden = target.inert = !isIntersecting;
                 }
             },
-            target: ({ slides }) => slides,
+            target: ({ list }) => children(list),
             args: { intersecting: false },
             options: ({ $el }) => ({ root: $el, rootMargin: '0px -10px' }),
         }),
@@ -302,7 +302,7 @@ export default {
                     slides.add(slide);
                 } while (this.length > j && currentLeft > left && currentLeft < right);
             }
-            return Array.from(slides);
+            return [...slides];
         },
 
         getIndexAt(percent) {

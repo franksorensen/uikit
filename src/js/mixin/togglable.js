@@ -51,13 +51,15 @@ export default {
 
     methods: {
         async toggleElement(targets, toggle, animate) {
-            try {
+            const CANCELLED = {};
+
+            return (
                 await Promise.all(
                     toNodes(targets).map((el) => {
                         const show = isBoolean(toggle) ? toggle : !this.isToggled(el);
 
                         if (!trigger(el, `before${show ? 'show' : 'hide'}`, [this])) {
-                            return Promise.reject();
+                            return CANCELLED;
                         }
 
                         const promise = (
@@ -90,15 +92,12 @@ export default {
                         return promise
                             ? promise.then(done, () => {
                                   removeClass(el, cls);
-                                  return Promise.reject();
+                                  return CANCELLED;
                               })
                             : done();
                     }),
-                );
-                return true;
-            } catch {
-                return false;
-            }
+                )
+            ).every((r) => r !== CANCELLED);
         },
 
         isToggled(el = this.$el) {
@@ -243,7 +242,8 @@ async function toggleTransition(el, show, { animation, duration, velocity, trans
     }
 }
 
-function toggleAnimation(el, show, cmp) {
+async function toggleAnimation(el, show, cmp) {
+    // Do not destructure origin: Tooltip sets it in _toggle's synchronous toggled handler.
     const { animation, duration, _toggle } = cmp;
 
     if (show) {
@@ -251,7 +251,6 @@ function toggleAnimation(el, show, cmp) {
         return Animation.in(el, animation[0], duration, cmp.origin);
     }
 
-    return Animation.out(el, animation[1] || animation[0], duration, cmp.origin).then(() =>
-        _toggle(el, false),
-    );
+    await Animation.out(el, animation[1] || animation[0], duration, cmp.origin);
+    _toggle(el, false);
 }

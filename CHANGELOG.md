@@ -1,5 +1,81 @@
 # Changelog
 
+## 3.25.26 (October 5, 2026)
+
+### Fixed
+
+- Fix handling of canceled Pointer Events while dragging Sortable items
+- Fix preventing Slider autoplay from starting its next transition before the prior one is painted
+
+## 3.25.25 (September 23, 2026)
+
+### Fixed
+
+- Fix regression when closing Lightbox
+
+## 3.25.23 (September 16, 2026)
+
+### Changed
+
+- Store private component bookkeeping in WeakMaps instead of `__uikit__` element properties
+
+## 3.25.22 (September 9, 2026)
+
+### Fixed
+
+- Fix accessibility-tree parentage for Drop components reparented in the DOM
+
+## 3.25.21 (August 7, 2026)
+
+### Fixed
+
+- Fix setting `aria-controls` attribute on multiple components
+
+## 3.25.20 (July 14, 2026)
+
+### Fixed
+
+- Fix video links in docs
+
+## 3.25.19 (June 24, 2026)
+
+### Fixed
+
+- Fix release
+
+## 3.25.18 (June 24, 2026)
+
+### Fixed
+
+- Fix reactivity in Slider component
+
+## 3.25.17 (May 28, 2026)
+
+### Fixed
+
+- Fix active state for Filter controls that combine filtering and sorting
+- Fix Ken Burns effect not restarting in Safari in Slideshow component
+
+## 3.25.16 (April 21, 2026)
+
+### Fixed
+
+- Fix negative numbers sorted incorrectly in Filter component
+- Fix Modal component stealing focus from overlays rendered outside the modal
+- Fix component root class not removed after disconnect
+
+## 3.25.15 (April 9, 2026)
+
+### Fixed
+
+- Fix issue with build process
+
+## 3.25.14 (March 27, 2026)
+
+### Fixed
+
+- Fix boundary option in Dropnav component
+
 ## 3.25.13 (February 23, 2026)
 
 ### Fixed

@@ -54,17 +54,13 @@ export function once(...args) {
 }
 
 export function trigger(targets, event, detail) {
-    return toEventTargets(targets).every((target) =>
-        target.dispatchEvent(createEvent(event, true, true, detail)),
-    );
+    return toEventTargets(targets)
+        .map((target) => target.dispatchEvent(createEvent(event, true, true, detail)))
+        .every((result) => result);
 }
 
 export function createEvent(e, bubbles = true, cancelable = false, detail) {
-    if (isString(e)) {
-        e = new CustomEvent(e, { bubbles, cancelable, detail });
-    }
-
-    return e;
+    return isString(e) ? new CustomEvent(e, { bubbles, cancelable, detail }) : e;
 }
 
 function getArgs(args) {

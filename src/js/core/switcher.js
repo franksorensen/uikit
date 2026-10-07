@@ -19,7 +19,7 @@ import { generateId } from '../api/instance';
 import { lazyload, swipe } from '../api/observables';
 import { maybeDefaultPreventClick } from '../mixin/event';
 import Togglable from '../mixin/togglable';
-import { keyMap } from '../util/keys';
+import { getNavigationIndex, keyMap } from '../util/keys';
 
 const selDisabled = '.uk-disabled *, .uk-disabled, [disabled]';
 
@@ -56,7 +56,7 @@ export default {
         },
 
         connectChildren() {
-            return this.connects.map((el) => children(el)).flat();
+            return this.connects.flatMap((el) => children(el));
         },
 
         toggles: ({ toggle }, $el) => $$(toggle, $el),
@@ -126,18 +126,11 @@ export default {
                 const { current, keyCode } = e;
                 const isVertical = matches(this.$el, this.selVertical);
 
-                let i =
-                    keyCode === keyMap.HOME
-                        ? 0
-                        : keyCode === keyMap.END
-                          ? 'last'
-                          : (keyCode === keyMap.LEFT && !isVertical) ||
-                              (keyCode === keyMap.UP && isVertical)
-                            ? 'previous'
-                            : (keyCode === keyMap.RIGHT && !isVertical) ||
-                                (keyCode === keyMap.DOWN && isVertical)
-                              ? 'next'
-                              : -1;
+                const i = getNavigationIndex(
+                    keyCode,
+                    isVertical ? keyMap.UP : keyMap.LEFT,
+                    isVertical ? keyMap.DOWN : keyMap.RIGHT,
+                );
 
                 if (~i) {
                     e.preventDefault();
@@ -200,7 +193,7 @@ export default {
             toggle.id = generateId(this, toggle);
             item.id = generateId(this, item);
 
-            toggle.ariaControls = item.id;
+            attr(toggle, 'aria-controls', item.id);
             attr(item, { role: 'tabpanel', 'aria-labelledby': toggle.id });
         }
         attr(this.$el, 'aria-orientation', matches(this.$el, this.selVertical) ? 'vertical' : null);
